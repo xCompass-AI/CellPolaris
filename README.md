@@ -1,5 +1,5 @@
 # CellPolaris
-CellPolaris
+
 ![image](https://github.com/xCompass-AI/CellPolaris/assets/49229942/7f27d271-a674-406b-95a0-9142a0ae4cf8)
 Figure 1. The schematic overview of CellPolaris design. 
 (A) Generation of a generalized transfer model using PECA2 tool to construct a GRN database from ATAC-Seq and corresponding cell state RNA-Seq data. This model enables cross-species and cross-tissue analysis. The trained model can take RNA-Seq data as input and generate corresponding GRNs, which can be utilized for downstream applications. 
