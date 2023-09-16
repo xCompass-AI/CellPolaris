@@ -1,6 +1,7 @@
 # CellPolaris
 
-##Abstract
+#Abstract
+
 Cell fate changes are determined by gene regulatory network (GRN), a sophisticated system regulating gene expression in precise spatial and temporal patterns. However, existing methods for reconstructing GRNs suffer from inherent limitations, leading to compromised accuracy and application generalizability. In this study, we introduce CellPolaris, a computational system that leverages transfer learning algorithms to generate high-quality, cell-type-specific GRNs. Diverging from conventional GRN inference models, which heavily rely on integrating epigenomic data with transcriptomic information or adopt causal strategies through gene co-expression networks, CellPolaris employs high-confidence GRN sources for model training, relying exclusively on transcriptomic data to generate previously unknown cell-type-specific GRNs. Applications of CellPolaris demonstrate remarkable efficacy in predicting master regulatory factors and simulating in-silico perturbations of transcription factors during cell fate transition, attaining state-of-the-art performance in accurately predicting candidate key factors and outcomes in cell reprogramming and spermatogenesis with validated datasets. It is worth noting that, with a transfer learning framework, CellPolaris can perform GRN based predictions in all cell types even across species. Together, CellPolaris represents a significant advancement in deciphering the mechanisms of cell fate regulation, thereby enhancing the precision and efficiency of cell fate manipulation at high resolution.
 
 
