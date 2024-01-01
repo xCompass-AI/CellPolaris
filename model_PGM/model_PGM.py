@@ -146,7 +146,7 @@ class Gauss_condition(nn.Module):
         self.k = nn.Parameter(torch.FloatTensor([k_init]))
         # self.TFexp = edge[3]
 
-    def forward(self, x,y):#x是TG表达值，y是TF表达值
+    def forward(self, x,y):
         if self.TF in TF_high:
             gTF_high_mu = names['gTF_high_%s' % self.TF].mu
             gTF_high_sigma = names['gTF_high_%s' % self.TF].sigma
@@ -161,7 +161,7 @@ class Gauss_condition(nn.Module):
                                  / torch.square(gTF_high_sigma)+1).relu()+0.01)
 
             dist = torch.distributions.Normal(loc, scale)
-        else:#这是TF但不是top_TF的情况
+        else:
             gTF_mu = names['gTG_%s' % self.TF].mu
             gTF_sigma = names['gTG_%s' % self.TF].sigma
             gTG_mu = names['gTG_%s' % self.TG].mu
@@ -191,7 +191,7 @@ class Model(nn.Module):
             names['edge_%s' % i] = Gauss_condition(edge[i])
         self.params = nn.ModuleList([x for x in names.values() if isinstance(x, nn.Module)])
 
-    # 最终的优化函数
+
     def forward(self,TF_high_exp,TG_exp,edge):
         p = q = k  = g = 0
         for i in range(len(TF_high)):
@@ -476,4 +476,4 @@ if __name__ == "__main__":
 
 time_end = time.time()
 run_time = time_end - time_start
-print(f"程序运行时间为：{run_time:.2f}秒")
+print(f"The program running time is：{run_time:.2f}秒")
