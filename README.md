@@ -22,3 +22,10 @@ conda env create -f environment.yml
 ```
 
 ## Running
+Use model_PGM to get deltaX through command:
+
+```bash
+python ./model_PGM/run.py
+```
+
+Use plot to get final results
