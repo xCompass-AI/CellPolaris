@@ -13,9 +13,9 @@ Figure 1. The schematic overview of CellPolaris design.
 
 ##Dependency
 
+Creating an Environment from a YAML File
 ```bash
-#Creating an Environment from a YAML File
 conda env create -f environment.yml
-
+```
 
 ##Running
