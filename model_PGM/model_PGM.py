@@ -31,10 +31,8 @@ def data_pro1(Network_file,RNA_file,edge_num,name):
 
     RNA_exp = pd.read_csv(RNA_file)
     # print(RNA_exp)
-    # 获取第一列的列名
     first_column_name = RNA_exp.columns[0]
     # print(first_column_name)
-    # 将第一列作为索引
     RNA_exp.set_index(first_column_name,inplace=True,drop=True, append=False)
     # print(RNA_exp)
     RNA_exp = RNA_exp.iloc[:,:columns]
@@ -45,50 +43,46 @@ def data_pro1(Network_file,RNA_file,edge_num,name):
     network = network[network['TF'] != network['TG']]
     network = network.iloc[:min(edge_num, network_sorted.shape[0]), :]
 
-    # 标准化score
     min_val = network['Score'].min()
     max_val = network['Score'].max()
     network['Score'] = ((network['Score'] - min_val) / (max_val - min_val)) * 0.6 + 0.1
 
-    # top_TF集合和表达量
     top_TF_set = set(network.iloc[:, 0]) - set(network.iloc[:, 1])
     top_TF_exp = RNA_exp.loc[RNA_exp.index.isin(top_TF_set)]
     top_TF = top_TF_exp.index.to_list()
     # print(top_TF)
     # print(top_TF_exp)
 
-    # 非top_TF集合和表达量，记为TG(其中也包含被调控的TF)
     TG_set = list(set(network.iloc[:, 1]))
     TG_exp = RNA_exp.loc[RNA_exp.index.isin(TG_set)]
     TG = TG_exp.index.to_list()
 
-    # 算每个TG的入度
     in_degree = network['TG'].value_counts()
     father_num = pd.DataFrame(in_degree)
     father_num = father_num.reindex(TG)
 
     # RNA_exp = RNA_exp.drop_duplicates()
     RNA_exp = RNA_exp.groupby(RNA_exp.index).mean()
-    # edge信息
+
     merged_1 = pd.merge(network, RNA_exp, left_on='TF', right_index=True, how='left')
     merged_2 = pd.merge(merged_1, RNA_exp, left_on='TG', right_index=True, how='left')
     print(merged_2)
-    # 提取需要计算协方差的列
+
     df = merged_2
     column_range1 = df.columns[3:53]
     column_range2 = df.columns[53:103]
     covariance_vector = np.zeros(edge_num)
-    # 计算协方差矩阵
+
     for i in range(df.shape[0]):
         covariance_vector[i] = np.cov(df[column_range1].values[i], df[column_range2].values[i])[0, 1]
 
-    # # 提取第三列数据
+
     # column_3 = df['Score']
     #
-    # # 将协方差矩阵的结果与第三列的数据相乘
+
     # result = covariance_vector * column_3
     #
-    # # 更新第三列数据
+
     # df['Score'] = result
     edge_dataframe = df
     df['Cov'] = covariance_vector
@@ -106,10 +100,10 @@ def data_pro1(Network_file,RNA_file,edge_num,name):
 def get_tf_tg_exp(rna_addr):
     RNA_exp = pd.read_csv(rna_addr)
     print(RNA_exp)
-    # 获取第一列的列名
+
     first_column_name = RNA_exp.columns[0]
     # print(first_column_name)
-    # 将第一列作为索引
+
     RNA_exp.set_index(first_column_name, inplace=True, drop=True, append=False)
     RNA_exp = RNA_exp.groupby(RNA_exp.index).sum()
 
@@ -161,7 +155,7 @@ class Gauss_condition(nn.Module):
         self.k = nn.Parameter(torch.FloatTensor([k_init]))
         # self.TFexp = edge[3]
 
-    def forward(self, x,y):#x是TG表达值，y是TF表达值
+    def forward(self, x,y):
         if self.TF in TF_high:
             gTF_high_mu = names['gTF_high_%s' % self.TF].mu
             gTF_high_sigma = names['gTF_high_%s' % self.TF].sigma
@@ -176,7 +170,7 @@ class Gauss_condition(nn.Module):
                                  / torch.square(gTF_high_sigma)).relu()+0.01)
 
             dist = torch.distributions.Normal(loc, scale)
-        else:#这是TF但不是top_TF的情况
+        else:
             gTF_mu = names['gTG_%s' % self.TF].mu
             gTF_sigma = names['gTG_%s' % self.TF].sigma
             gTG_mu = names['gTG_%s' % self.TG].mu
@@ -206,7 +200,7 @@ class Model(nn.Module):
             names['edge_%s' % i] = Gauss_condition(edge[i])
         self.params = nn.ModuleList([x for x in names.values() if isinstance(x, nn.Module)])
 
-    # 最终的优化函数
+
     def forward(self,TF_high_exp,TG_exp,edge):
         p = q = k = 0
         for i in range(len(TF_high)):
@@ -231,13 +225,13 @@ def get_data(dataframe, param_addr,edge_num,TF_high, TG, edge,name):
 
     corr_data = dataframe
     transcription_factors = list(corr_data['TF'])
-    # 目标基因列表
+
     target_genes = list(corr_data['TG'])
     list_tf_tg_edge = TF_high + TG + edge
     param = param_addr
     param_list = param.values.tolist()
     len_tf_tg = len(TF_high + TG)
-    # 使用字典推导式生成字典，regulatory_dict_tf键为转录因子，值为对应的目标基因列表.regulatory_dict_gene键为基因，值为转录因子列表
+
     regulatory_dict_tf = {}
     regulatory_dict_gene = {}
     for tf, gene in zip(transcription_factors, target_genes):
@@ -251,15 +245,7 @@ def get_data(dataframe, param_addr,edge_num,TF_high, TG, edge,name):
 
 
 def get_param_numpy(list_all, param_list, TG, TF_list, len_tf_tg,ko_tf):
-    '''
-    将模型的参数取出
-    @param list_all:
-    @param param_list:
-    @param TG:
-    @param TF_list:
-    @param len_tf_tg: tf+tg的长度
-    @return: TG的均值和方差，TF列表的均值和方差，k,权重，tf的值
-    '''
+
     # print(param_list)
     # print(list_all)
     # TF_list = TF_list[:1]
@@ -293,9 +279,9 @@ time_start = time.time()
 
 if __name__ == "__main__":
 
-    # 获取命令行参数
+
     args = sys.argv
-    # 获取参数值
+
     param1 = args[1]
     param2 = args[2]
     param3 = args[3]
@@ -312,7 +298,7 @@ if __name__ == "__main__":
     name_csv = param4
     output_folder = param5
     edge_num = int(param6)
-    # scaler = MinMaxScaler()  # 创建MinMaxScaler实例
+    # scaler = MinMaxScaler()  
     # # TF_high, TG, father_num, edge, TF_high_exp, TG_exp = data_pro(Network_file=net_addr,
     # #              RNA_file=rna_addr_sam,
     # #              edge_num=edge_num)
@@ -342,17 +328,17 @@ if __name__ == "__main__":
     pd.DataFrame({'name':list_test}).to_csv('name.csv',index=False)
 
     arr = np.array(TF_high_exp)
-    # 计算每个小列表的均值
+
     TF_high_mu = np.mean(arr, axis=0)
-    # 计算每个小列表的方差
+ 
     TF_high_std = np.std(arr, axis=0)
     print(len(TF_high_mu))
 
-    # 将二维列表转换为NumPy数组
+
     arr_tg = np.array(TG_exp)
-    # 计算每个小列表的均值
+  
     TG_mu = np.mean(arr_tg, axis=0)
-    # 计算每个小列表的方差
+
     TG_std = np.std(arr_tg, axis=0)
     father_num = torch.IntTensor(father_num).to(device)
     # edge = edge_dataframe.iloc[:, :3].join(edge_dataframe.iloc[:, 3]).join(edge_dataframe.iloc[:, columns+3])
@@ -363,13 +349,11 @@ if __name__ == "__main__":
 
     model = Model().to(device)
     # optim = torch.optim.SGD(model.parameters(), lr=100)
-    # 保存模型的初始参数
-    # 定义不同的学习率
+  
     mu_learning_rate = 0.01
     sigma_learning_rate = 0.01
     k_learning_rate = 0.1
 
-    # 将不同的参数分组
     mu_params = []
     sigma_params = []
     k_params = []
@@ -382,7 +366,6 @@ if __name__ == "__main__":
         elif 'k' in name:
             k_params.append(param)
 
-    # 创建优化器，并为不同的参数组设置不同的学习率
     optimizer1 = torch.optim.SGD([
         {'params': mu_params, 'lr': mu_learning_rate},
         {'params': sigma_params, 'lr': sigma_learning_rate},
@@ -408,8 +391,8 @@ if __name__ == "__main__":
         loss = out
         optimizer1.zero_grad()
         loss.backward()
-        # # 计算梯度并进行裁剪
-        # max_norm = 1.0  # 设置裁剪的最大范数
+
+        # max_norm = 1.0 
         # nn.utils.clip_grad_norm_(model.parameters(), max_norm)
         optimizer1.step()
         for name, param in model.named_parameters():
@@ -421,10 +404,10 @@ if __name__ == "__main__":
                 with torch.no_grad():
                     param.clamp_(0.8 * initial_params[name], 1.2 * initial_params[name])
             # else:
-            #     if 'k' in name:  # 找到k参数
+            #     if 'k' in name: 
             #         with torch.no_grad():
             #             if param < 0:
-            #                 param.clamp_(-10, -1)  # 将参数限制在[-5.0, -0.1]的范围内
+            #                 param.clamp_(-10, -1) 
             #             else:
             #                 param.clamp_(1, 10)
                 # if 'mu' in name:
@@ -435,18 +418,18 @@ if __name__ == "__main__":
                 #         param.clamp_(0.9 * initial_params[name], 1.1 * initial_params[name])
         print(out)
 
-    # 输出神经网络的参数
+
     # for name, param in model.named_parameters():
     #     # print(f'{name} parameters:')
     #     print(name)
     #     print(param)
 
-    # 取出模型中的所有参数
+
     # params_dict = {name: param.detach().numpy().flatten() for name, param in model.named_parameters()}
     params_dict = {name: param.detach().cpu().numpy().flatten() for name, param in model.named_parameters()}
-    # 将参数字典转换为DataFrame
+
     params_df = pd.DataFrame(params_dict)
-    # 打印参数DataFrame
+
     print(params_df)
     params_df.to_csv(f'{output_folder}/params_df_{name_csv}.csv', index=False)
 
@@ -489,9 +472,9 @@ if __name__ == "__main__":
             # #         target_gene_list2 = regulatory_dict_tf[i]
             # #         target_gene_list.extend(target_gene_list2)
             # #         target_gene_list = list(set(target_gene_list))
-            # # 传播的轮数
+      
             # propagation_rounds = 2
-            # # 进行传播并获取涉及的基因集合
+ 
             # target_gene_list = propagate_genes(regulatory_dict_tf, ko_tf, propagation_rounds)
 
             # print(len(target_gene_list))
@@ -509,7 +492,7 @@ if __name__ == "__main__":
                                                                 len_tf_tg,
                                                                 ko_tf)
                 deltax_results.append(deltax)
-                # 对数据进行 -1 到 1 的 Min-Max 标准化
+           
                 # deltax_results = minmax_scale(deltax_results)
 
             res = pd.DataFrame({ko_tf: deltax_results}, index=target_gene_list)
@@ -536,4 +519,4 @@ if __name__ == "__main__":
 
 time_end = time.time()
 run_time = time_end - time_start
-print(f"程序运行时间为：{run_time:.2f}秒")
+print(f"Run times：{run_time:.2f}秒")
