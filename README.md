@@ -14,9 +14,6 @@ Figure 1. The schematic overview of CellPolaris design.
 (C) Simulation of the impact of gene perturbation on cell differentiation pathways based on GRN analysis: A probability graphical model of gene expression regulation was constructed using GRN analysis. Simulated knockout genes were set to zero, and the expression changes of neighboring node genes were inferred to deduce changes in cell states.
 
 ## 1 Use transfer_learning to get GRN:
-```bash
-cd transfer_learning
-```
 
 ### Dataset
 To download the dataset required to run the transfer learning code from the link below:
@@ -25,7 +22,7 @@ https://pan.baidu.com/s/1vLoOV_7hq98ZDQGwpFJyHQ?pwd=0280
 ### Dependency:
 
 ```bash
-conda env create -f environment.yml
+conda env create -f ./transfer_learning/environment.yml
 ```
 
 ### Running
