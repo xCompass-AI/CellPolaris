@@ -6,8 +6,9 @@ Changes in cell fate are determined by a gene regulatory network (GRN), a sophis
 
 
 ## Workflow
-![Uploading =image.png…]()
 
+
+![image](https://github.com/xCompass-AI/CellPolaris/assets/49229942/c35a6212-5fee-4488-b3c4-5e53c7035d71)
 Figure 1. Schematic overview of CellPolaris design. 
 a Generation of a generalized transfer model using PECA2 tool to construct a GRN database from ATAC-Seq and corresponding cell state RNA-Seq data. This model enables cross-species and cross-tissue analysis. The trained model can take RNA-Seq data as input and generate corresponding GRNs, which can be utilized for downstream applications. 
 b Prediction of cell fate regulatory factors based on GRN analysis: Comparison of GRN differences between source and target cells during cell fate transitions. Transcription factor nodes in the differential networks were scored and ranked. 
