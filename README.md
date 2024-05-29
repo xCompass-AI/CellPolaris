@@ -22,13 +22,13 @@ cd transfer_learning
 To download the dataset required to run the transfer learning code from the link below:
 https://pan.baidu.com/s/1vLoOV_7hq98ZDQGwpFJyHQ?pwd=0280 
 
-###Creating an environment:
+### Dependency:
 
 ```bash
 conda env create -f environment.yml
 ```
 
-###Running
+### Running
 For cross-tissue/period
 ```bash
 python ./transfer_learning/scripts_for_execute/script_train_tissue_period.py
