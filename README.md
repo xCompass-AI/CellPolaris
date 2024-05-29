@@ -52,7 +52,7 @@ python  ./transfer_learning/scripts_for_execute/script_train_multi_to_multi_with
 ```
 
 
-## 2 Use model_PGM to get deltaX through command:
+## 2 Use model_PGM to get deltaX:
 
 ### Dependency
 Creating an Environment from a YAML File
@@ -64,7 +64,7 @@ conda env create -f environment_pgm.yml
 python ./model_PGM/run.py
 ```
 
-## 3 Use plot to get final results
+## 3 Use plot to get final results:
 ### Running
 ```bash
 python ./plot/CellCruise.py
