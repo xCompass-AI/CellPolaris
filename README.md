@@ -22,7 +22,8 @@ conda env create -f environment.yml
 ```
 ## Dataset
 To download the dataset required to run the transfer learning code from the link below:
-https://1drv.ms/f/s!AiR3trb0uGdXgqAzIOCs4zrBVYOqew?e=FmGoBW
+https://pan.baidu.com/s/1vLoOV_7hq98ZDQGwpFJyHQ?pwd=0280 
+
 
 ## Running
 Use model_PGM to get deltaX through command:
