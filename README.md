@@ -19,7 +19,7 @@ Figure 1. The schematic overview of CellPolaris design.
 To download the dataset required to run the transfer learning code from the link below:
 https://pan.baidu.com/s/1vLoOV_7hq98ZDQGwpFJyHQ?pwd=0280 
 
-### Dependency:
+### Dependency
 
 ```bash
 conda env create -f ./transfer_learning/environment.yml
