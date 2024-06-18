@@ -18,7 +18,7 @@ c Simulation of the impact of gene perturbation on cell differentiation pathways
 
 ### Dataset
 To download the dataset required to run the transfer learning code from the link below:
-https://www.scidb.cn/en/anonymous/Vk52WTNl
+https://www.scidb.cn/en/s/VNvY3e
 
 ### Dependency
 
