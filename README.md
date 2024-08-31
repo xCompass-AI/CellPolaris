@@ -71,8 +71,10 @@ python ./model_PGM/run.py
 python ./plot/CellCruise.py
 ```
 
+# Troubleshooting
+If you encounter any problems during installation or use of CellPolaris, please contact us by email (cuiwentao@cnic.cn). We will help you as soon as possible.
 
-#Citation
+# Citation
 If you use this code for your research, please cite our paper [CellPolaris: Decoding Cell Fate through Generalization Transfer Learning of Gene Regulatory Networks](https://biorxiv.org/content/10.1101/2023.09.25.559244v1.abstract)
 ```bash
 @article{feng2023cellpolaris,
@@ -83,4 +85,4 @@ If you use this code for your research, please cite our paper [CellPolaris: Deco
   year={2023},
   publisher={Cold Spring Harbor Laboratory}
 }
-```bash
+```
