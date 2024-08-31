@@ -72,7 +72,7 @@ python ./plot/CellCruise.py
 ```
 
 # Troubleshooting
-If you encounter any problems during installation or use of CellPolaris, please contact us by email [cuiwentao@cnic.cn]. We will help you as soon as possible.
+If you encounter any problems during installation or use of CellPolaris, please contact us by email cuiwentao@cnic.cn. We will help you as soon as possible.
 
 # Citation
 If you use this code for your research, please cite our paper [CellPolaris: Decoding Cell Fate through Generalization Transfer Learning of Gene Regulatory Networks](https://biorxiv.org/content/10.1101/2023.09.25.559244v1.abstract)
