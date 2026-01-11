@@ -75,12 +75,10 @@ If you encounter any problems during installation or use of CellPolaris, please 
 # Citation
 If you use this code for your research, please cite our paper [CellPolaris: Decoding Cell Fate through Generalization Transfer Learning of Gene Regulatory Networks](https://biorxiv.org/content/10.1101/2023.09.25.559244v1.abstract)
 ```bash
-@article{feng2023cellpolaris,
-  title={CellPolaris: Decoding Cell Fate through Generalization Transfer Learning of Gene Regulatory Networks},
-  author={Feng, Guihai and Qin, Xin and Zhang, Jiahao and Huang, Wuliang and Zhang, Yiyang and Cui, Wentao and Li, Shirui and Chen, Yao and Liu, Wenhao and Tian, Yao and others},
-  journal={bioRxiv},
-  pages={2023--09},
-  year={2023},
-  publisher={Cold Spring Harbor Laboratory}
+@article{fengcellpolaris,
+  title={CellPolaris: Transfer Learning for Gene Regulatory Network Construction to Guide Cell State Transitions},
+  author={Feng, Guihai and Qin, Xin and Zhang, Jiahao and Huang, Wuliang and Zhang, Yiyang and Cui, Wentao and Chen, Yao and Li, Shirui and Liu, Wenhao and Tian, Yao and others},
+  journal={Advanced science (Weinheim, Baden-Wurttemberg, Germany)},
+  pages={e08697}
 }
 ```
